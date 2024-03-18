@@ -11,13 +11,12 @@ dotenv.config();
 
 describe('Agent', () => {
   it('returns an array of Headlines', async () => {
+    const [driver, OPENAI] = await Promise.all([
+      configureWebDriver(),
+      authenticateOpenAi(String(process.env.OPENAI_API_KEY), String(process.env.OPENAI_MODEL))
+    ])
 
-
-    const driver = await configureWebDriver();
-    const OPENAI = await authenticateOpenAi(String(process.env.OPENAI_API_KEY), String(process.env.OPENAI_MODEL));
-
-
-    const actual = await agent(driver,OPENAI);  
+    const actual = await agent(driver, OPENAI);
     const expected: Headlines = [
       {
         href: expect.any(String),
@@ -28,10 +27,9 @@ describe('Agent', () => {
       }
     ];
  
-    
     expect(actual).toEqual(expect.arrayContaining(expected));
-    
-  }, 150000); 
 
- 
+  }, 150000);
+
+
 });
