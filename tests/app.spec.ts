@@ -2,11 +2,22 @@ import { agent } from '../src/modules';
 import {
   Headlines
 } from "../src/types"
-
+import {
+  configureWebDriver,
+  authenticateOpenAi,
+} from "../src/modules"
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 describe('Agent', () => {
   it('returns an array of Headlines', async () => {
-    const actual = await agent();  
+
+
+    const driver = await configureWebDriver();
+    const OPENAI = await authenticateOpenAi(String(process.env.OPENAI_API_KEY), String(process.env.OPENAI_MODEL));
+
+
+    const actual = await agent(driver,OPENAI);  
     const expected: Headlines = [
       {
         href: expect.any(String),

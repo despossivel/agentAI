@@ -1,21 +1,15 @@
-
-import * as dotenv from 'dotenv';
 import { WebDriver } from 'selenium-webdriver';
 import { Headlines } from "../types";
 import { rankScore } from "../utils";
 import {
-  configureWebDriver,
-  authenticateOpenAi,
   collectHeadlines,
   collectContentAndSummaries
 } from "../modules"
-dotenv.config();
+import { OpenAi } from '../classes';
+ 
 
-export async function agent(): Promise<Headlines> {
-  let driver: WebDriver | null = null;
+export async function agent(driver: WebDriver, OPENAI: OpenAi): Promise<Headlines> {
   try {
-    driver = await configureWebDriver();
-    const OPENAI = await authenticateOpenAi();
     let headlines = await collectHeadlines(driver);
     headlines = await collectContentAndSummaries(headlines, driver, OPENAI);
     return rankScore(headlines);
