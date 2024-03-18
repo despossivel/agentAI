@@ -12,7 +12,7 @@ dotenv.config();
 describe('Agent', () => {
   it('returns an array of Headlines', async () => {
     const [driver, OPENAI] = await Promise.all([
-      configureWebDriver(),
+      configureWebDriver(String(process.env.URL_NEWS)),
       authenticateOpenAi(String(process.env.OPENAI_API_KEY), String(process.env.OPENAI_MODEL))
     ])
 

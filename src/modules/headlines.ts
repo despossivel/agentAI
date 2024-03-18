@@ -4,7 +4,7 @@ import { Headlines, Moderation } from "../types";
 
 
 export async function collectHeadlines(driver: WebDriver): Promise<Headlines> {
-    await driver.get(String(process.env.URL_NEWS));
+    
 
     const headlineElements = await driver.findElements(
         By.xpath(
